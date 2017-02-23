@@ -1,6 +1,7 @@
 {%- do gantry.debugger.startTimer('render', 'Rendering page') %}
 {%- do gantry.theme.setLayout() -%}
-{%- set segments = gantry.theme.segments -%}
+{%- do gantry.theme.loadAtoms() -%}
+{%- set segments = gantry.theme.segments() -%}
 
 {%- set content %}
     {% if gantry.theme.hasContent() %}

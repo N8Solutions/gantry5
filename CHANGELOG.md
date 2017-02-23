@@ -1,3 +1,21 @@
+# 5.4.9
+## xx/xx/2017
+
+1. [Common](#common)
+    1. [](#new)
+        - Add support for atom caching when in production mode (similar to particle caching)
+          - If you have overridden `partials/page.html.twig` or `partials/page_head.html.twig`, please update them
+    2. [](#improved)
+        - Added accessibility support for Font Awesome icons (#1873)
+    3. [](#bugfix)
+        - Fixed `{% pageblock bottom %}...{% endpageblock %}` not working from atoms
+        - Fixed issues with nested `collection.list` items after upgrading to Gantry 5.4.7 (#1877)
+        - Fixed issues with `container.set` and `container.tabs` (#1882)
+3. [WordPress](#wordpress)
+    3. [](#bugfix)
+        - Fixed placeholder having the same color as real input values (#1876)
+        - Fixed potential XSS vulnerability by updating Timber library
+
 # 5.4.8
 ## 14/02/2017
 
