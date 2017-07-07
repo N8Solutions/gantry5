@@ -1,5 +1,125 @@
+# 5.4.14
+## 07/06/2017
+
+1. [Common](#common)
+    2. [](#improved)
+        - Accessibility: Menu / Offcanvas: Offcanvas and hamburger toggle menu are now ARIA compatible (#1891)
+        - Filepicker Field: File listing mode (thumbnails/list) is now remembered and restored (#1697)
+        - Filepicker Field: UI updates, container is now more spacious and in list view the thumbnails are visible
+        - Date and Joomla Articles/WordPress Posts/Grav Content particles: Added new date format: `Month Day, Year` (#2042)
+    3. [](#bugfix)
+        - Menu: Disable Dropdowns still Shows Indicator (#2031)
+        - Menu: Fixed frontend menu 'Extended' option, resetting heights of wrapping containers not necessarily related to the menu itself (#2025)
+        - Menu / Offcanvas: Fixed issue preventing the offcanvas toggle to show when Menu set with only icons (#1939)
+        - Menu: Fixed issue with touch devices where ending the scroll gesture on the offcanvas menu would trigger the expansion of a parent menu item (#1620)
+        - Fixed Tag Attributes 'enter' key causing the value to get lost while triggering the Apply (#1860)
+        - Filepicker: Fixed issue with upper case extensions not getting recognized and failing to upload (#1852)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.3.3
+4. [Grav](#grav)
+    3. [](#bugfix)
+        - Fixed Particles Picker not adapting to height and scroll position in Layout Manager (#1942)
+
+# 5.4.13
+## 06/06/2017
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated Lightcase to v2.4.0
+        - If debug mode is enabled, add HTML comments to recognize particles and positions (#639)
+    2. [](#improved)
+        - Menu particle: Add aria-label for icon-only menu items for better accessibility support (#1888)
+    3. [](#bugfix)
+        - Fixed bug with enabled field when editing disabled particle in the layout (#1571)
+        - Helium: Add missing `System Messages` particle to Default and Offline layouts (#1962)
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Use the new package uninstall protection feature in Joomla 3.7
+        - Embedded `System - Gantry 5` settings into the component settings (#2010)
+    3. [](#bugfix)
+        - Fixed issue with Regular Labs Cache Cleaner (#1833)
+        - Fixed issue with Hydrogen textarea (#1973)
+        - Fixed some caching issues when changing between Production and Development modes
+        - Fixed untranslated month names in particles (#1322)
+        - Fixed `|number_format` twig filter to use the current locale
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Updated Timber to v1.3.1
+    3. [](#bugfix)
+        - Fixed checkboxes next to the setting enablers in Content tab getting unchecked after refresh (#1986)
+        - Fixed `Missing argument 2 for modify_gantry5_locale()`
+        - Fixed external scripts and CSS with query parameters being broken (#1975)
+4. [Grav](#grav)
+    3. [](#bugfix)
+        - Fixed CSS/JS pipelines, though you need to set `js_minify: false` to keep the menu working (#2001)
+
+# 5.4.12
+## 04/26/2017
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated Bootstrap 3 to v3.3.7
+    3. [](#bugfix)
+        - Fixed potential error: `Undefined property: stdClass::$inherit` in when processing layout
+        - Fixed a bug in `Layout::updateInheritance()` when inheritance is missing
+2. [Joomla](#joomla)
+    1. [](#new)
+        - Added official support for Joomla 3.7
+4. [Grav](#grav)
+    3. [](#bugfix)
+        - Fixed broken styles / scripts if CSS / JS Pipeline has been enabled (#1941)
+
+# 5.4.11
+## 04/03/2017
+
+1. [Common](#common)
+    1. [](#new)
+        - Updated Lightcase.js to v2.3.6
+        - Helium: Added admin controls for setting link and link hover colors. You might need to resave your theme settings (#1626)
+    3. [](#bugfix)
+        - Fixed nested collection list multi-item edit not functioning (#1924)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Helium and Hydrogen: Fixed frontend calendar icon size
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Add options to disable outline assignments individually for both posts and pages, including custom types (#1279)
+        - Hydrogen and Helium: Blog and Archive type pages can now display posts in columns
+    2. [](#improved)
+        - Administration: Hide assignment types with no items in them to make the page shorter
+4. [Grav](#grav)
+    1. [](#new)
+        - Added `Read More` toggle for blog item page
+    3. [](#bugfix)
+        - Fixed missing publish date from content array particle
+
+# 5.4.10
+## 03/10/2017
+
+1. [Common](#common)
+    1. [](#new)
+        - Helium: Updated Owl Carousel to v2.2.1
+    3. [](#bugfix)
+        - Fixed bad HTML markup in assignments administration (#1917, thanks @Quy)
+        - Fixed regression in handling `container.set` (#1889)
+        - Fixed missing closing tag when editing layout (#1919, thanks @Quy)
+        - Fixed potential issues with URLs containing spaces (#1902)
+2. [Joomla](#joomla)
+    3. [](#bugfix)
+        - Helium and Hydrogen: Frontend calendar icon size fixes (#1914)
+        - Helium and Hydrogen: Login module styling issues (#1910, #1911)
+        - Hydrogen: Frontend article editor, tooltips open up way to the right (#1912)
+        - Helium: Frontend article editor, article search button misaligned and partly covered (#1913)
+3. [WordPress](#wordpress)
+    1. [](#new)
+        - Added content post-processing to automatically resolve all stream URI links
+4. [Grav](#grav)
+    1. [](#new)
+        - Added content post-processing to automatically resolve all stream URI links
+
 # 5.4.9
-## 23/02/2017
+## 02/23/2017
 
 1. [Common](#common)
     1. [](#new)
@@ -17,7 +137,7 @@
         - Fixed potential XSS vulnerability by updating Timber library
 
 # 5.4.8
-## 14/02/2017
+## 02/14/2017
 
 1. [Common](#common)
     3. [](#bugfix)
@@ -25,7 +145,7 @@
         - Fixed issue where collection is not working if the field selector is nested: `main.items` (#1867)
 
 # 5.4.7
-## 10/02/2017
+## 02/10/2017
 
 1. [Common](#common)
     1. [](#new)
@@ -54,7 +174,7 @@
         - Fixed multiple new particles of the same type not being properly saved on positions page (#1790)
 
 # 5.4.6
-## 26/01/2017
+## 01/26/2017
 
 1. [Common](#common)
     1. [](#new)
@@ -109,7 +229,7 @@
         - Fixed misaligned style for key/value field (#1789)
 
 # 5.4.5
-## 16/01/2017
+## 01/16/2017
 
 1. [Common](#common)
     1. [](#bugfix)
@@ -126,7 +246,7 @@
         - Fixed positions rendering escaped HTML code (#1797)
 
 # 5.4.4
-## 14/01/2017
+## 01/14/2017
 
 3. [WordPress](#wordpress)
     3. [](#bugfix)
@@ -137,7 +257,7 @@
         - Fixed namespace reference for Grav Page, throwing errors for PHP < 7
 
 # 5.4.3
-## 13/01/2017
+## 01/13/2017
 
 1. [Common](#common)
     1. [](#new)
@@ -164,21 +284,21 @@
         - Fixed engine page types missing when creating a new page (#1749)
 
 # 5.4.2
-## 20/12/2016
+## 12/20/2016
 
 1. [Common](#common)
     3. [](#bugfix)
         - Fix regression: Do not change links which aren't using Gantry streams in platform filter events (#1756)
 
 # 5.4.1
-## 13/12/2016
+## 12/13/2016
 
 4. [Grav](#grav)
     3. [](#bugfix)
         - Fixed Grav and Grav Admin dependencies versions
 
 # 5.4.0
-## 13/12/2016
+## 12/13/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -207,7 +327,7 @@
         - Grav is now integrated with Gantry 5!
 
 # 5.3.9
-## 23/11/2016
+## 11/23/2016
 
 1. [Common](#common)
     2. [](#improved)
@@ -229,7 +349,7 @@
         - Fixed `Gantry: Please set current configuration before using $gantry["config"]` (#942)
 
 # 5.3.8
-## 10/11/2016
+## 11/10/2016
 
 3. [WordPress](#wordpress)
     3. [](#bugfix)
@@ -237,7 +357,7 @@
         - Fixed issues with Gantry menu mixing up menu item parameters and ordering after using WordPress Importer (#1669)
 
 # 5.3.7
-## 09/11/2016
+## 11/09/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -265,7 +385,7 @@
         - Fixed editing the menu item titles under `Appearance > Menu` changing the order of menu items in Gantry (#1016)
 
 # 5.3.6
-## 06/10/2016
+## 10/06/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -316,7 +436,7 @@
         - Fixed wrong protocol in compiled CSS files in a site that uses both http and https (#1594)
 
 # 5.3.5
-## 02/09/2016
+## 09/02/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -338,14 +458,14 @@
         - Fixed `Undefined index: link` when saving menu
 
 # 5.3.4
-## 24/08/2016
+## 08/24/2016
 
 1. [Common](#common)
     3. [](#bugfix)
         - **Patch Release**: This patch release fixes a regression introduced with [v5.3.3](http://gantry.org/#changelog:v=5.3.3) where Layout Manager and Menu Manager item settings were not clickable.
 
 # 5.3.3
-## 24/08/2016
+## 08/24/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -383,7 +503,7 @@
         - Fixed new outline having checkboxes in Content tab selected (#1482)
 
 # 5.3.2
-## 19/07/2016
+## 07/19/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -431,7 +551,7 @@
         - Fixed `Missing argument 4 for gantry5_upgrader_source_selection()` (#1440)
 
 # 5.3.1
-## 11/07/2016
+## 07/11/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -456,7 +576,7 @@
         - Fixed Bootstrap pagination having too much margin (#1389)
 
 # 5.3.0
-## 08/07/2016
+## 07/08/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -531,7 +651,7 @@
         - Fixed missing layout denying access to admin (#1319)
 
 # 5.2.18
-## 27/05/2016
+## 05/27/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -548,7 +668,7 @@
         - Fixed `Gantry 5 - Presets` plugin being enabled during upgrades (#1285)
 
 # 5.2.17
-## 19/05/2016
+## 05/19/2016
 
 1. [Common](#common)
     3. [](#bugfix)
@@ -565,7 +685,7 @@
         - Work around commit issues to WP SVN to allow again automated updates (5.2.16 was skipped, see [changelog](http://gantry.org/#changelog:v=5.2.16&p=wordpress))
 
 # 5.2.16
-## 17/05/2016
+## 05/17/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -600,7 +720,7 @@
         - Fixed HTML entities not encoded properly in menu item titles (#1248)
 
 # 5.2.15
-## 25/04/2016
+## 04/25/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -628,7 +748,7 @@
         - Improved current URL detection for Menu Item based Assignments with possibility of filtering custom server ports (#1208)
 
 # 5.2.14
-## 15/04/2016
+## 04/15/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -668,7 +788,7 @@
         - Fixed issue where bad value in `wp_upload_dir()['relative']` is causing error in Image Picker (#1233)
 
 # 5.2.13
-## 16/03/2016
+## 03/16/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -696,7 +816,7 @@
         - Fixed `Undefined $_GLOBALS` on the WP login page when the Offline Mode is enabled
 
 # 5.2.12
-## 27/02/2016
+## 02/27/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -708,7 +828,7 @@
         - Remove "always render component" workaround introduced in 5.2.8 (fixes #1157, thanks @JoomFx and @nonumber)
 
 # 5.2.11
-## 23/02/2016
+## 02/23/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -736,7 +856,7 @@
         - Fixed typo in `posts_per_page` custom WordPress field (thanks @adi8i - #1153)
 
 # 5.2.10
-## 08/02/2016
+## 02/08/2016
 
 3. [WordPress](#wordpress)
     3. [](#bugfix)
@@ -745,7 +865,7 @@
         - Fix saving/applying widgets in menu (#1130)
 
 # 5.2.9
-## 04/02/2016
+## 02/04/2016
 
 1. [Common](#common)
     3. [](#bugfix)
@@ -757,7 +877,7 @@
         - New selectize field that list all pages / posts (thanks @adi8i - #1131)
 
 # 5.2.8
-## 27/01/2016
+## 01/27/2016
 
 1. [Common](#common)
     1. [](#new)
@@ -782,7 +902,7 @@
         - Fix footer scripts from main content (#1113)
 
 # 5.2.7
-## 05/01/2016
+## 01/05/2016
 
 1. [Common](#common)
     3. [](#bugfix)
@@ -797,7 +917,7 @@
         - Removed description meta tag to avoid duplications of it. This should be handled by plugins (#892)
 
 # 5.2.6
-## 21/12/2015
+## 12/21/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -821,7 +941,7 @@
         - Added missing default configuration for Home outline in Hydrogen
 
 # 5.2.5
-## 17/12/2015
+## 12/17/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -853,7 +973,7 @@
         - Fixed frontend showing wrong menu items
 
 # 5.2.4
-## 30/11/2015
+## 11/30/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -872,7 +992,7 @@
         - URL Encoding Menu Items to allow use of special characters such as plus (#1017)
 
 # 5.2.3
-## 16/11/2015
+## 11/16/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -894,7 +1014,7 @@
         - Fixed meta conditional checks in single post layout in Hydrogen
 
 # 5.2.2
-## 10/11/2015
+## 11/10/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -919,7 +1039,7 @@
         - Fix potential Fatal Error during installation
 
 # 5.2.1
-## 02/11/2015
+## 11/02/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -945,7 +1065,7 @@
         - Fixed a `Fatal error: Cannot use object of type Closure as array` that could occur with some widgets
 
 # 5.2.0
-## 29/10/2015
+## 10/29/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -992,7 +1112,7 @@
         - Fixed open_basedir warning in admin when getting list of Gantry themes
 
 # 5.1.6
-## 14/10/2015
+## 10/14/2015
 
 1. [Common](#common)
     2. [](#improved)
@@ -1014,7 +1134,7 @@
         - Tag attributes aren't rendered in CSS/JS Atom, even though they're there (#888)
 
 # 5.1.5
-## 30/09/2015
+## 09/30/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -1057,7 +1177,7 @@
         - Fixed a bug causing presets in the menu to show up vertically instead of horizontally
 
 # 5.1.4
-## 18/09/2015
+## 09/18/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -1090,7 +1210,7 @@
         - Added missing Hydrogen block variations
 
 # 5.1.3
-## 15/09/2015
+## 09/15/2015
 
 1. [Common](#common)
     2. [](#improved)
@@ -1136,7 +1256,7 @@
         - `Front Page` conditional check in Assignments isn't working when a single page is set as Front Page
 
 # 5.1.2
-## 31/08/2015
+## 08/31/2015
 
 1. [Common](#common)
     3. [](#bugfix)
@@ -1149,7 +1269,7 @@
         - Fixed issue when renaming an Outline that prevented it to further get edited, duplicated or deleted (#588)
 
 # 5.1.1
-## 28/08/2015
+## 08/28/2015
 
 1. [Common](#common)
     1. [](#new)
@@ -1199,7 +1319,7 @@
         - Fatal error when editing menu item name in the editor (#752)
 
 # 5.1.0
-## 16/08/2015
+## 08/16/2015
 
 1. [Common](#common)
     1. [](#new)

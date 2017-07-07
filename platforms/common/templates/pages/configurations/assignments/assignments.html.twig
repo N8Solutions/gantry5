@@ -49,6 +49,7 @@
                 <div class="cards-wrapper clearfix">
                     {% for type, types in assignments %}
                         {% for name, list in types %}
+                            {% if list.items %}
                             <div class="card settings-block">
                                 <h4>
                                     {{ list.label }}
@@ -75,9 +76,9 @@
                                 <div class="settings-param-wrapper">
                                     {% for link in list.items %}
                                         {% set path = 'assignments.' ~ type ~ '.' ~ name ~ '.' ~ link.name %}
-                                        {% set group = link.section ? 'data-g-assignments-group=' ~ link.name : 'data-g-assignments-parent=' ~ link.taxonomy %}
+                                        {% set group = link.section ? 'data-g-assignments-group="' ~ link.name|e ~ '"' : 'data-g-assignments-parent="' ~ link.taxonomy|e ~ '"' %}
                                         {% set value = link.value is defined ? link.value : gantry.config.get(path) %}
-                                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}"{{ group }}>
+                                        <label class="settings-param{% if link.section %} settings-param-section{% endif %}" {{ group|raw }}>
                                             {% include 'forms/fields/enable/enable.html.twig' with {
                                             'default': true,
                                             'name': path|fieldName,
@@ -88,12 +89,13 @@
                                             'title': "'" ~ link.label ~ "' Menu Item"
                                             } %}
                                             <span class="settings-param-title{% if link.section %} settings-param-section-title{% endif %}">
-                                {{- link.label -}}
-                            </span>
+                                                {{- link.label -}}
+                                            </span>
                                         </label>
                                     {% endfor %}
                                 </div>
                             </div>
+                            {% endif %}
                         {% endfor %}
                     {% endfor %}
                 </div>

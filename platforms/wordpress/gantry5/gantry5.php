@@ -53,6 +53,8 @@ function gantry5_plugin_defaults()
     $defaults = array(
         'production'       => '1',
         'use_media_folder' => '0',
+        'assign_posts'     => '1',
+        'assign_pages'     => '1',
         'debug'            => '0',
         'offline'          => '0',
         'offline_message'  => 'Site is currently in offline mode. Please try again later.',
@@ -100,7 +102,7 @@ if (load_plugin_textdomain($domain, false, $languages_path) === false) {
 
 load_plugin_textdomain($domain, false, $languages_path);
 
-function modify_gantry5_locale($locale, $domain)
+function modify_gantry5_locale($locale, $domain = null)
 {
     // Revert the gantry5 domain locale to en_US
     if (isset($domain) && $domain == 'gantry5') {
