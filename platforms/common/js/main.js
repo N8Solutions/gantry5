@@ -3396,12 +3396,12 @@ ready(function() {
 
                             if (particle.hasAttribute('enabled')) { particle[particle.getAttribute('enabled') ? 'enable' : 'disable'](); }
 
-                            if (particle.getType() != 'section') {
+                            if (particle.getType() !== 'section') {
                                 particle.setTitle(response.body.data.title || 'Untitled');
                                 particle.updateTitle(particle.getTitle());
                             }
 
-                            if (particle.getType() == 'position') {
+                            if (particle.getType() === 'position') {
                                 particle.updateKey();
                             }
 
@@ -7940,6 +7940,7 @@ var FilePicker = new prime({
                 value    = selected ? selected.data('file-url') : '';
 
             $(this.data.field).value(value);
+            $('body').emit('input', { target: this.data.field });
             modal.close();
         }, this));
 
@@ -10070,7 +10071,7 @@ ready(function() {
         }
 
         var slide = function(override) {
-            collapsed = typeof override != 'number' ? override : collapsed;
+            collapsed = typeof override !== 'number' ? override : collapsed;
             if (!collapsed) {
                 card.addClass('g-collapsed');
                 element.addClass('g-collapsed-main');
@@ -10109,7 +10110,7 @@ ready(function() {
 
     // global collapse togglers
     body.delegate('click', '[data-g-collapse-all]', function(event, element) {
-        var mode          = element.data('g-collapse-all') == 'true',
+        var mode          = element.data('g-collapse-all') === 'true',
             parent        = element.parent('.g-filter-actions'),
             container     = parent.nextSibling(),
             collapsers    = container.search('[data-g-collapse]'),
@@ -10125,6 +10126,10 @@ ready(function() {
             data = JSON.parse(collapser.data('g-collapse'));
             handle = data.handle ? collapser.find(data.handle) : collapser.find('.g-collapse');
             panel = data.target ? collapser.find(data.target) : collapser;
+
+            handle
+                .data('title', mode ? data.expand : data.collapse)
+                .data('tip', mode ? data.expand : data.collapse);
 
             storage = ((data.store !== false) ? CookieStorage : storage) || {};
 
@@ -14791,9 +14796,14 @@ History.Adapter.bind(window, 'statechange', function() {
             var fader;
             destination.html(response.body.html);
             if (fader = (destination.matches('[data-g5-content]') ? destination : destination.find('[data-g5-content]'))) {
+                var navbar = $('#navbar');
                 fader.style({ opacity: 0 });
-                if (isTopNavOrMenu) { $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true'); }
-                $('#navbar')[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
+
+                if (isTopNavOrMenu) {
+                    $(navbar).attribute('tabindex', '-1').attribute('aria-hidden', 'true');
+                }
+
+                navbar[isTopNavOrMenu ? 'slideUp' : 'slideDown']();
                 fader.animate({ opacity: 1 });
             }
         } else { destination.html(response.body); }
@@ -15354,11 +15364,11 @@ $.implement({
                 element.attribute('style', element.gSlideStyle);
             };
 
-        callback = typeof animation == 'function' ? animation : (callback || function() {});
+        callback = typeof animation === 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === false) { return callback(); }
         callback = series(callbackStart, callback, callbackEnd);
 
-        animation = typeof animation == 'string' ? animation : {
+        animation = typeof animation === 'string' ? animation : {
             duration: '250ms',
             callback: callback
         };
@@ -15368,7 +15378,7 @@ $.implement({
     },
 
     slideUp: function(animation, callback) {
-        if (typeof this.gSlideCollapsed == 'undefined') {
+        if (typeof this.gSlideCollapsed === 'undefined') {
             this.gSlideStyle = this.attribute('style');
         }
 
@@ -15380,11 +15390,11 @@ $.implement({
                 element.style('visibility', 'hidden').attribute('aria-hidden', true);
             };
 
-        callback = typeof animation == 'function' ? animation : (callback || function() {});
+        callback = typeof animation === 'function' ? animation : (callback || function() {});
         if (this.gSlideCollapsed === true) { return callback(); }
         callback = series(callbackStart, callback, callbackEnd);
 
-        animation = typeof animation == 'string' ? animation : {
+        animation = typeof animation === 'string' ? animation : {
             duration: '250ms',
             callback: callback
         };
@@ -15411,7 +15421,7 @@ $.implement({
             height: parseInt(this.compute('height'), 10)
         };
 
-        this.attribute('style', style);
+        this[0].style = style;
 
         return size;
     },

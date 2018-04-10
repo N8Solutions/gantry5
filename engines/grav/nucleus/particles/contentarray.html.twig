@@ -1,14 +1,6 @@
 {% extends '@nucleus/partials/particle.html.twig' %}
 
-{% set attr_extra = '' %}
-{% if particle.extra %}
-    {% for attributes in particle.extra %}
-        {% for key, value in attributes %}
-            {% set attr_extra = attr_extra ~ ' ' ~ key|e ~ '="' ~ value|e('html_attr') ~ '"' %}
-        {% endfor %}
-    {% endfor %}
-{% endif %}
-
+{% set attr_extra = particle.extra|attribute_array %}
 {% set article_settings = particle.article %}
 {% set filter = article_settings.filter %}
 {% set sort = article_settings.sort %}
@@ -26,14 +18,9 @@
 {% set pages = collection.slice(start, limit.total) %}
 
 {% block particle %}
-    {% if total > limit.total and display.prevnext_buttons %}
-        <button class="button float-left contentarray-button" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
-        <button class="button float-right contentarray-button" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
-        <div class="clearfix"></div>
-    {% endif %}
 
     {# All pages #}
-    <div class="g-content-array g-grav-pages{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {% if particle.extra %}{{ attr_extra|raw }}{% endif %}>
+    <div class="g-content-array g-grav-pages{% if particle.css.class %} {{ particle.css.class }}{% endif %}" {{- attr_extra|raw }}>
 
         {% for column in pages.batch(limit.columns) %}
             <div class="g-grid">
@@ -70,7 +57,7 @@
                                     </div>
                                 {% endif %}
 
-                                {% if display.date.enabled or (display.author.enabled and page.username) or display.category.enabled %}
+                                {% if display.date.enabled or (display.author.enabled and (page.header.author.username or page.header.author.name or page.header.author.alias)) or display.category.enabled %}
                                     <div class="g-array-item-details">
                                         {% if display.date.enabled %}
                                             <span class="g-array-item-date">
@@ -84,9 +71,17 @@
                                             </span>
                                         {% endif %}
 
-                                        {% if display.author.enabled and (page.username or page.author) %}
+                                        {% if display.author.enabled and (page.header.author.username or page.header.author.name or page.header.author.alias) %}
+                                            {% if page.header.author.name %}
+                                                {% set author = page.header.author.name %}
+                                            {% elseif page.header.author.alias %}
+                                                {% set author = page.header.author.alias %}
+                                            {% else %}
+                                                {% set author = page.header.author.username %}
+                                            {% endif %}
+
                                             <span class="g-array-item-author">
-                                                <i class="fa fa-user" aria-hidden="true"></i>{{ page.author ?: page.username }}
+                                                <i class="fa fa-user" aria-hidden="true"></i>{{ author }}
                                             </span>
                                         {% endif %}
 
@@ -132,12 +127,20 @@
                 {% endfor %}
             </div>
         {% endfor %}
+
+        {% if total > limit.total and display.pagination_buttons %}
+            <div class="g-content-array-pagination">
+                <button class="button float-left contentarray-button pagination-button pagination-button-prev" data-id="{{ id }}" data-start="{{ max(0, start - limit.total) }}"{{ start - limit.total < 0 ? ' disabled' }}>Prev</button>
+                <button class="button float-right contentarray-button pagination-button pagination-button-next" data-id="{{ id }}" data-start="{{ start + limit.total }}"{{ start + limit.total >= total ? ' disabled' }}>Next</button>
+                <div class="clearfix"></div>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}
 
 {% block javascript_footer %}
-    {% if total > limit.total and display.prevnext_buttons %}
+    {% if total > limit.total and display.pagination_buttons %}
         {% do gantry.load('jquery') %}
         <script>
             (function ($) {
@@ -152,7 +155,7 @@
                     $.ajax('{{ base_url ~ '/api/particle.json' }}', {
                         type       : 'GET',
                         data       : request,
-                        indexValue : id,
+                        indexValue : id + '-particle',
                         success: function (response) {
                             if(response.html) {
                                 $('#' + this.indexValue).html(response.html);
