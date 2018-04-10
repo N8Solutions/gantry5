@@ -54,7 +54,7 @@ class plgSystemGantry5 extends JPlugin
     public function onAfterRoute()
     {
         if ($this->app->isSite()) {
-             $this->onAfterRouteSite();
+            $this->onAfterRouteSite();
 
         } elseif ($this->app->isAdmin()) {
             $this->onAfterRouteAdmin();
@@ -93,10 +93,105 @@ class plgSystemGantry5 extends JPlugin
     }
 
     /**
+     * Serve particle AJAX requests in 'index.php?option=com_ajax&plugin=particle&format=json'.
+     *
+     * @return array|string|null
+     */
+    public function onAjaxParticle()
+    {
+        if (!$this->app->isSite() || !class_exists('Gantry\Framework\Gantry')) {
+            return null;
+        }
+
+        $input = $this->app->input;
+        $format = $input->getCmd('format', 'html');
+
+        if (!in_array($format, ['json', 'raw', 'debug'])) {
+            throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+        }
+
+        $props = $_GET;
+        unset($props['option'], $props['plugin'], $props['format'], $props['id'], $props['Itemid']);
+
+        $identifier = $input->getCmd('id');
+
+        if (strpos($identifier, 'module-') === 0) {
+            preg_match('`-([\d]+)$`', $input->getCmd('id'), $matches);
+
+            if (!isset($matches[1])) {
+                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            }
+
+            $id = $matches[1];
+
+            require_once JPATH_ROOT . '/modules/mod_gantry5_particle/helper.php';
+
+            return ModGantry5ParticleHelper::ajax($id, $props, $format);
+        }
+
+        $gantry = \Gantry\Framework\Gantry::instance();
+
+        /** @var \Gantry\Framework\Theme $theme */
+        $theme = $gantry['theme'];
+        $layout = $theme->loadLayout();
+        $html = '';
+
+        if ($identifier === 'main-particle') {
+            $type = $identifier;
+            $menu = $this->app->getMenu();
+            $menuItem = $menu->getActive();
+            $params = $menuItem ? $menuItem->getParams() : new JRegistry;
+
+            /** @var object $params */
+            $data = json_decode($params->get('particle'), true);
+            if ($data && $theme->hasContent()) {
+                $context = [
+                    'gantry' => $gantry,
+                    'noConfig' => true,
+                    'inContent' => true,
+                    'ajax' => $props,
+                    'segment' => [
+                        'id' => $identifier,
+                        'type' => $data['type'],
+                        'classes' => $params->get('pageclass_sfx'),
+                        'subtype' => $data['particle'],
+                        'attributes' => $data['options']['particle'],
+                    ]
+                ];
+
+                $html = trim($theme->render("@nucleus/content/particle.html.twig", $context));
+            }
+        } else {
+            $particle = $layout->find($identifier);
+            if (!isset($particle->type) || $particle->type !== 'particle') {
+                throw new RuntimeException(JText::_('JERROR_PAGE_NOT_FOUND'), 404);
+            }
+
+            $context = array(
+                'gantry' => $gantry,
+                'inContent' => false,
+                'ajax' => $props,
+            );
+
+            $block = $theme->getContent($particle, $context);
+            $type = $particle->type . '.' . $particle->subtype;
+            $html = (string) $block;
+        }
+
+        if ($format === 'raw') {
+            return $html;
+        }
+
+        return ['code' => 200, 'type' => $type, 'id' => $identifier, 'props' => (object) $props, 'html' => $html];
+    }
+
+    /**
      * Load Gantry framework before dispatching to the component.
      */
     private function onAfterRouteSite()
     {
+        $input = $this->app->input;
+
         $templateName = $this->app->getTemplate();
 
         if (!$this->isGantryTemplate($templateName)) {
